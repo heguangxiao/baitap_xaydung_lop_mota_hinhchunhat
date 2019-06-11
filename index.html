@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+<canvas id="myCanvas" width="400" height="300" style="border:1px solid grey;"/>
+</div>
+<br/>
+<input type="button" id="change" value="Change" onclick="changeValue();"/>
+<br/>
+<div id="showMessage"></div>
+
+<script>
+
+    let showdiv = document.getElementById('showMessage');
+    let messDiv = '';
+    function changeValue() {
+        let cd = prompt('Nhap chieu dai',100);
+        let cr = prompt('Nhap chieu rong',60);
+
+        hinhChuNhat.setChieuDai(cd);
+        hinhChuNhat.setChieuRong(cr);
+
+        messDiv = 'Chu vi = ('+hinhChuNhat.getChieuDai()+' + '+hinhChuNhat.getChieuRong()+')*2 = '+hinhChuNhat.chuVi()
+            + '<br>'
+            + 'Dien tich = '+hinhChuNhat.getChieuDai()+' x '+hinhChuNhat.getChieuRong()+' = '+hinhChuNhat.dienTich();
+        showdiv.innerHTML = messDiv;
+        hinhChuNhat.hinhMau();
+    }
+    function clearCanvas() {
+        ctx.clearRect(0, 0, c.width, c.height);
+    }
+
+    let Rectangle = function (a,b) {
+        this.chieuDai = a;
+        this.chieuRong = b;
+
+        this.setChieuDai = function (cd) {
+            this.chieuDai = cd;
+        }
+
+        this.setChieuRong = function (cr) {
+            this.chieuRong = cr;
+        }
+
+        this.getChieuDai = function () {
+            return this.chieuDai;
+        }
+
+        this.getChieuRong = function () {
+            return this.chieuRong;
+        }
+        this.chuVi = function () {
+            return (parseInt(this.chieuDai)+parseInt(this.chieuRong))*2;
+        }
+        this.dienTich = function () {
+            return parseInt(this.chieuDai)*parseInt(this.chieuRong);
+        }
+        this.getRandomHex = function() {
+            return Math.floor(Math.random()*255);
+        }
+        this.getRandomColor = function(){
+            let red = this.getRandomHex();
+            let green = this.getRandomHex();
+            let blue = this.getRandomHex();
+            return "rgb(" + red + "," + blue + "," + green +")";
+        }
+        this.hinhMau = function () {
+            let _canvas = document.getElementById('myCanvas');
+            let ctx = _canvas.getContext("2d");
+            ctx.fillStyle = this.getRandomColor();
+            ctx.fillRect(10,10,this.chieuDai,this.chieuRong);
+        }
+    }
+
+    let hinhChuNhat = new Rectangle(100,60);
+
+    hinhChuNhat.hinhMau();
+
+
+</script>
+</body>
+</html>
